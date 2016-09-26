@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="full" lang="en">
+<!-- Make sure the <html> tag is set to the .full CSS class. Change the background image in the full.css file. -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DIDS - Dynamic information display system</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/the-big-picture.css" rel="stylesheet">
+    <link href="css/newcss.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="mailto:morphingsleep@gmail.com">АСУП - Автоматизированная система управления производством (Андрей Янусов, практика 2016)</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                      <!-- <a href="mailto:morphingsleep@gmail.com">Андрей Янусов, практика 2016</a> -->
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <h2>Система отображения информации объекта: <br>	&laquo;Дуговая сталеплавильная печь&raquo;</h2>
+                <hr>
+                <h4><strong>Инструкция:</strong></h4>
+                <ol>
+                  <li>Произведите заправку печи. Проверьте печь на наличие лишних предметов</li>
+                  <li>Загрузите шихту при помощи кнопки <span style="color: green;">&laquo;Завалка&raquo;</span>.</li>
+                  <li>Запустите систему плавления металла кнопкой: <span style="color: red;">&laquo;Нагрев&raquo;</span>.</li>
+                  <li>Запустите раскисление  при помощи кнопки: <span style="color: #00008B">&laquo;Раскисление&raquo;</span>.</li>
+                  <li>Отключите работу свечей при помощи кнопки: <span style="color: #8B008B">&laquo;Выключение печи&raquo;</span>.</li>
+                  <li>Выпустите готовую сталь при помощи кнопки: <span style="color: #2F4F4F">&laquo;Слив металла&raquo;</span>.</li>
+                </ol>
+                <table class="table">
+                  <tr>
+                    <td>
+                      <a data-tooltip="Загружает шихтовые материалы на под печи." class="btn btn-start-green btn-start btn-lg" href="#" role="button"  onclick="patternRunOne()">Завалка</a>
+                    </td>
+                    <td>
+                      <a data-tooltip="Происходит расплав металла, при этом он окисляется" class="btn btn-start-red btn-start btn-lg" href="#" role="button"  onclick="patternRunSecond()">Нагрев</a>
+
+                    </td>
+                    <td>
+                      <a data-tooltip="Электроды отключаются." class="btn btn-start-indigo btn-start btn-lg" href="#" role="button"  onclick="patternRunThird()">Выключение печи</a>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td align="center" colspan="2">
+                        <a data-tooltip="Добавление примесей для данной марки стали" class="btn btn-start-blue btn-start btn-lg" href="#" role="button"  onclick="patternRunFourth()">Раскисление</a>
+                    </td>
+                    <td>
+                      <a data-tooltip="Выпуск готовой стали и шлака осуществляется через сталевыпускное отверстие и желоб путем наклона рабочего пространства." class="btn btn-start-gray btn-start btn-lg" href="#" role="button"  onclick="patternRunFifth()">Слив металла</a>
+                    </td>
+                  </tr>
+                </table>
+                <div id="tooltip"></div>
+
+            </div>
+            <div id="floge" class="col-md-6 col-sm-12">
+              <canvas id="canvas"  width="700px" height="500"></canvas>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Fabric.js -->
+    <script src="js/fabric.js"></script>
+    <!-- DIDS - Dynamic information display system -->
+    <script src="js/DIDS.js"></script>
+    <script type="text/javascript">
+    $("[data-tooltip]").mousemove(function (eventObject) {
+
+            $data_tooltip = $(this).attr("data-tooltip");
+
+            $("#tooltip").text($data_tooltip)
+                         .css({
+                             "top" : eventObject.pageY
+
+                         })
+                         .show();
+
+        }).mouseout(function () {
+
+            $("#tooltip").hide()
+                         .text("")
+                         .css({
+                             "top" : 0,
+                            "left" : 0
+                         });
+        });
+    </script>
+</body>
+
+</html>
